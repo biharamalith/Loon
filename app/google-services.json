@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1048640107620",
+    "project_id": "loon-fdd68",
+    "storage_bucket": "loon-fdd68.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1048640107620:android:e3a72b6fcfc323406c1b71",
+        "android_client_info": {
+          "package_name": "com.nibm.loon"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3J1uoRuRd2KlloYvYTlrPatXldOdghJc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
