@@ -12,17 +12,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Loon"
         tools:targetApi="31">
-        <activity
-            android:name=".MainActivity"
-            android:exported="true"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.Loon">
+        <activity android:name=".ui.signUpScreen.SignUpScreen"/>
+        <activity android:name=".ui.loginScreen.LoginScreen"/>
+        <activity android:name=".ui.SplashScreen.SplashScreen"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MainActivity"/>
+
     </application>
 
 </manifest>
