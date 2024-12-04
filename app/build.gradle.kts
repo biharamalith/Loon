@@ -93,8 +93,13 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.auth)
+    implementation (libs.androidx.activity.activity.compose.v172.x3)
+    implementation (libs.androidx.ui.v161)
+    implementation (libs.androidx.material.v161)
+    implementation (libs.androidx.ui.tooling.preview.v161)
+    implementation (libs.androidx.navigation.compose)
 
+    implementation(platform("com.google.firebase:firebase-bom:33.6.0"))
+    implementation("com.google.firebase:firebase-auth")
 
 }
