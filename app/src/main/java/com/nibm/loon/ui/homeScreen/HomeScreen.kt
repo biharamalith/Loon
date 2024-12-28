@@ -8,13 +8,13 @@ import androidx.compose.foundation.layout.padding
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -48,12 +48,14 @@ fun BottomNavigationBar(navController: NavHostController) {
         BottomNavItem.Search,
         BottomNavItem.Profile
     )
-    BottomNavigation {
+    BottomNavigation(
+        backgroundColor = Color.LightGray // Set the background color to light grey
+    ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
         items.forEach { item ->
             BottomNavigationItem(
-                icon = { Icon(item.icon, contentDescription = item.title) },
+                icon = { Icon(item.icon, contentDescription = item.title, tint = Color.Black) }, // Set the icon color to black
                 label = { Text(item.title) },
                 selected = currentRoute == item.route,
                 onClick = {
@@ -80,4 +82,10 @@ sealed class BottomNavItem(val title: String, val icon: ImageVector, val route: 
     data object Home : BottomNavItem("Home", Icons.Filled.Home, "home")
     data object Search : BottomNavItem("Search", Icons.Filled.Search, "search")
     data object Profile : BottomNavItem("Profile", Icons.Filled.Person, "profile")
+}
+
+@Preview(showBackground = true)
+@Composable
+fun MainScreenPreview() {
+    MainScreen()
 }
