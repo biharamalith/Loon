@@ -1,31 +1,26 @@
 package com.nibm.loon.ui.loginScreen
 
-//noinspection UsingMaterialAndMaterial3Libraries
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-//noinspection UsingMaterialAndMaterial3Libraries
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
-//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.ButtonDefaults
-//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.CircularProgressIndicator
-//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.MaterialTheme
-//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.OutlinedTextField
-//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Text
-//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.TextButton
 
 import androidx.compose.runtime.Composable
@@ -35,15 +30,20 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import com.nibm.loon.R
 import com.nibm.loon.ui.homeScreen.HomeScreen
 import com.nibm.loon.ui.signUpScreen.SignUpScreen
+import com.nibm.loon.ui.theme.LightGreenColor
+import com.nibm.loon.ui.theme.SegoeUIFontFamily
 
 class LoginScreen : ComponentActivity() {
     // [START declare_auth]
@@ -104,7 +104,7 @@ class LoginScreen : ComponentActivity() {
                         "Authentication successful.",
                         Toast.LENGTH_SHORT,
                     ).show()
-                    val user = auth.currentUser
+//                    val user = auth.currentUser
                     //updateUI(user)
                     startActivity(Intent(this, HomeScreen::class.java))
                 } else {
@@ -145,18 +145,33 @@ fun LoginUI(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
+        Image(
+            painter = painterResource(id = R.drawable.logo),
+            contentDescription = null,
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.TopCenter)
+                .padding(top = 140.dp)
+        )
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp),
             modifier = Modifier.padding(32.dp)
         ) {
-            Text("Login", style = MaterialTheme.typography.h4)
+            Text(
+                "Sign In",
+                //fontFamily = SegoeUIFontFamily,
+                //fontWeight = FontWeight.Normal,
+                modifier = Modifier
+                    .padding(bottom = 16.dp),
+            )
 
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
                 label = { Text("Email") },
                 modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(16.dp),
                 enabled = !isLoading
             )
 
@@ -165,7 +180,9 @@ fun LoginUI(
                 onValueChange = { password = it },
                 label = { Text("Password") },
                 visualTransformation = PasswordVisualTransformation(),
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth(),
+                shape = RoundedCornerShape(16.dp),
                 enabled = !isLoading
             )
 
@@ -174,11 +191,19 @@ fun LoginUI(
                     isLoading = true
                     onLogin(email, password)
                 },
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(60.dp) // Increase the height
+                    .padding(vertical = 8.dp),
                 enabled = !isLoading,
                 colors = ButtonDefaults.buttonColors(
-                    backgroundColor = Color(0xFF61F879) // Using your specified color
-                )
+                                backgroundColor = LightGreenColor
+                ),
+                elevation = ButtonDefaults.elevation(
+                    defaultElevation = 8.dp,
+                    pressedElevation = 16.dp
+                ),
+                shape = RoundedCornerShape(16.dp)
 
             ) {
                 if (isLoading) {
@@ -190,10 +215,20 @@ fun LoginUI(
 
             TextButton(
                 onClick = onSignUp,
-                enabled = !isLoading
+                enabled = !isLoading,
+                //color
+
             ) {
                 Text("Don't have an account? Sign up")
             }
         }
+
+        Image(
+            painter = painterResource(id = R.drawable.background_4),
+            contentDescription = null,
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.BottomCenter)
+        )
     }
 }
