@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -13,7 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.nibm.loon.ui.loginScreen.LoginUI
+import com.nibm.loon.ui.theme.LightGreenColor
 
 class SignUpScreen : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,12 +62,14 @@ fun SignUpUI(
                     value = firstName,
                     onValueChange = { firstName = it },
                     label = { Text("First Name") },
+                    shape = RoundedCornerShape(16.dp),
                     modifier = Modifier.weight(1f)
                 )
                 OutlinedTextField(
                     value = lastName,
                     onValueChange = { lastName = it },
                     label = { Text("Last Name") },
+                    shape = RoundedCornerShape(16.dp),
                     modifier = Modifier.weight(1f)
                 )
             }
@@ -78,12 +81,14 @@ fun SignUpUI(
                     value = city,
                     onValueChange = { city = it },
                     label = { Text("City") },
+                    shape = RoundedCornerShape(16.dp),
                     modifier = Modifier.weight(1f)
                 )
                 OutlinedTextField(
                     value = district,
                     onValueChange = { district = it },
                     label = { Text("District") },
+                    shape = RoundedCornerShape(16.dp),
                     modifier = Modifier.weight(1f)
                 )
             }
@@ -91,12 +96,14 @@ fun SignUpUI(
                 value = email,
                 onValueChange = { email = it },
                 label = { Text("Email") },
+                shape = RoundedCornerShape(16.dp),
                 modifier = Modifier.fillMaxWidth()
             )
             OutlinedTextField(
                 value = password,
                 onValueChange = { password = it },
                 label = { Text("Password") },
+                shape = RoundedCornerShape(16.dp),
                 visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier.fillMaxWidth()
             )
@@ -104,6 +111,7 @@ fun SignUpUI(
                 value = confirmPassword,
                 onValueChange = { confirmPassword = it },
                 label = { Text("Confirm Password") },
+                shape = RoundedCornerShape(16.dp),
                 visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier.fillMaxWidth()
             )
@@ -116,8 +124,9 @@ fun SignUpUI(
                     }
                 },
                 modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(16.dp),
                 colors = ButtonDefaults.buttonColors(
-                    backgroundColor = Color(0xFF61F879) // Using your specified color
+                    backgroundColor = LightGreenColor
                 )
             ) {
                 Text("Sign Up")
