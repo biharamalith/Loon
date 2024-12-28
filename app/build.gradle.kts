@@ -52,39 +52,28 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.material)
+    implementation(libs.coil.compose.v230)
+
+// Compose dependencies
     implementation(platform(libs.androidx.compose.bom))
+    implementation(platform(libs.androidx.compose.bom.v20231001))
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.compose.ui.ui2)
+    implementation(libs.androidx.compose.material.material)
+    implementation(libs.androidx.runtime)
+    implementation(libs.androidx.navigation.compose)
+
+// UI dependencies
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    implementation(libs.androidx.activity)
-    implementation(libs.androidx.constraintlayout)
-    implementation (libs.androidx.material.v151)
-    implementation (libs.ui)
-    implementation (libs.coil.compose.v230)
 
-    // Compose Dependencies
-    implementation (libs.ui)
-    implementation (libs.androidx.compose.material.material)
-    implementation (libs.ui.tooling.preview)
-    implementation (libs.androidx.activity.compose.v181)
-
-    // Update or add these compose-related dependencies
-    implementation(platform(libs.androidx.compose.bom.v20231001))
-    implementation(libs.androidx.compose.ui.ui2)
-    implementation(libs.ui.graphics)
-    implementation(libs.material3)
-    implementation(libs.androidx.compose.ui.ui.tooling.preview)
-    implementation(libs.androidx.runtime)
-
-    // If you need image loading capabilities
-    implementation(libs.coil.kt.coil.compose)
-
+// Test dependencies
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -93,13 +82,19 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    implementation (libs.androidx.activity.activity.compose.v172.x3)
-    implementation (libs.androidx.ui.v161)
-    implementation (libs.androidx.material.v161)
-    implementation (libs.androidx.ui.tooling.preview.v161)
-    implementation (libs.androidx.navigation.compose)
-
-    implementation(platform("com.google.firebase:firebase-bom:33.6.0"))
+    //noinspection GradleDependency
+    implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
     implementation("com.google.firebase:firebase-auth")
+
+
+    implementation ("androidx.compose.ui:ui:1.2.0")
+    implementation ("androidx.compose.material:material:1.2.0")
+    implementation ("androidx.compose.ui:ui-tooling-preview:1.2.0")
+    implementation ("androidx.compose.material:material-icons-extended:1.2.0")
+    implementation ("androidx.navigation:navigation-compose:2.5.0")
+    implementation ("androidx.activity:activity-compose:1.5.0")
+
+    // Optional - for preview support
+    debugImplementation ("androidx.compose.ui:ui-tooling:1.2.0")
 
 }
