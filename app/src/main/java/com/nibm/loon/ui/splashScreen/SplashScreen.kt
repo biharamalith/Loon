@@ -1,5 +1,6 @@
 package com.nibm.loon.ui.splashScreen
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -17,11 +18,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.nibm.loon.ui.loginScreen.LoginScreen
 import kotlinx.coroutines.delay
-import com.nibm.loon.R  // Add this import
+import com.nibm.loon.R
+import com.google.firebase.FirebaseApp
 
+@SuppressLint("CustomSplashScreen")
 class SplashScreen : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Initialize Firebase
+        FirebaseApp.initializeApp(this)
         setContent {
             SplashScreenUI {
                 startActivity(Intent(this, LoginScreen::class.java))
@@ -48,7 +53,7 @@ fun SplashScreenUI(onTimeout: () -> Unit) {
         modifier = Modifier.fillMaxSize().background(Color.White)
     ) {
         Image(
-            painter = painterResource(id = R.drawable.logo),  // Changed this line
+            painter = painterResource(id = R.drawable.logo_bg_removed),  // Changed this line
             contentDescription = "Salon Logo",
             modifier = Modifier.size(200.dp)
         )
