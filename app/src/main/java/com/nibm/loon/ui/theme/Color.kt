@@ -2,7 +2,7 @@ package com.nibm.loon.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val GreenColor = Color(0xFF75E6A4)
+val GreenColor = Color(0xFF0BEC6A)
 
 val LightGreenColor = Color(0xFF5AE3A8)
 val DarkGreenColor = Color(0xFF273838)
