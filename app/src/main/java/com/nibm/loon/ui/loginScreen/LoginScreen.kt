@@ -22,7 +22,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
-
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,33 +29,31 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.google.firebase.Firebase
+import androidx.compose.ui.unit.sp
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.auth
 import com.nibm.loon.R
 import com.nibm.loon.ui.homeScreen.HomeScreen
 import com.nibm.loon.ui.signUpScreen.SignUpScreen
-import com.nibm.loon.ui.theme.LightGreenColor
-import com.nibm.loon.ui.theme.SegoeUIFontFamily
+import com.nibm.loon.ui.theme.Aeonik
+import com.nibm.loon.ui.theme.DarkGreenColor
+import com.nibm.loon.ui.theme.GothamBlack
+import com.nibm.loon.ui.theme.GreenColor
 
 class LoginScreen : ComponentActivity() {
-    // [START declare_auth]
     private lateinit var auth: FirebaseAuth
-    // [END declare_auth]
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // [START initialize_auth]
-        // Initialize Firebase Auth
-        auth = Firebase.auth
-        // [END initialize_auth]
+        auth = FirebaseAuth.getInstance()
+
         setContent {
             LoginUI(
                 onLogin = { email, password -> signIn(email, password) },
@@ -67,70 +64,53 @@ class LoginScreen : ComponentActivity() {
         }
     }
 
-    /*override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        // Initialize Firebase Auth
-        auth = Firebase.auth
-
-        setContent {
-            LoginUI(
-                onLogin = { email, password -> signIn(email, password) },
-                onSignUp = {
-                    startActivity(Intent(this, SignUpScreen::class.java))
-                }
-            )
-        }*/
-
-    // [START on_start_check_user]
     public override fun onStart() {
         super.onStart()
-        // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
         if (currentUser != null) {
-           // reload()
+            startActivity(Intent(this, HomeScreen::class.java))
+            finish()
         }
     }
-    // [END on_start_check_user]
 
     private fun signIn(email: String, password: String) {
-        // [START sign_in_with_email]
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithEmail:success")
                     Toast.makeText(
                         baseContext,
                         "Authentication successful.",
                         Toast.LENGTH_SHORT,
                     ).show()
-//                    val user = auth.currentUser
-                    //updateUI(user)
                     startActivity(Intent(this, HomeScreen::class.java))
+                    finish()
                 } else {
-                    // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithEmail:failure", task.exception)
                     Toast.makeText(
                         baseContext,
-                        "Authentication failed.",
+                        "Authentication failed: ${task.exception?.message}",
                         Toast.LENGTH_SHORT,
                     ).show()
-                    //updateUI(null)
                 }
             }
-        // [END sign_in_with_email]
     }
+
     companion object {
         private const val TAG = "EmailPassword"
     }
 }
 
-@Preview(showBackground = true)
+@Preview(
+    showBackground = true,
+    widthDp = 412,
+    heightDp = 846,
+    device = "spec:width=720dp,height=1480dp,dpi=280"
+)
 @Composable
 fun PreviewLoginUI() {
     LoginUI(onLogin = { _, _ -> }, onSignUp = {})
 }
-
 
 @Composable
 fun LoginUI(
@@ -146,25 +126,18 @@ fun LoginUI(
         contentAlignment = Alignment.Center
     ) {
         Image(
-            painter = painterResource(id = R.drawable.logo),
+            painter = painterResource(id = R.drawable.logo_bg_removed),
             contentDescription = null,
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.TopCenter)
-                .padding(top = 140.dp)
+                .padding(top = 25.dp)
         )
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp),
             modifier = Modifier.padding(32.dp)
         ) {
-            Text(
-                "Sign In",
-                //fontFamily = SegoeUIFontFamily,
-                //fontWeight = FontWeight.Normal,
-                modifier = Modifier
-                    .padding(bottom = 16.dp),
-            )
 
             OutlinedTextField(
                 value = email,
@@ -193,11 +166,11 @@ fun LoginUI(
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(60.dp) // Increase the height
+                    .height(60.dp)
                     .padding(vertical = 8.dp),
                 enabled = !isLoading,
                 colors = ButtonDefaults.buttonColors(
-                                backgroundColor = LightGreenColor
+                    backgroundColor = GreenColor
                 ),
                 elevation = ButtonDefaults.elevation(
                     defaultElevation = 8.dp,
@@ -209,17 +182,31 @@ fun LoginUI(
                 if (isLoading) {
                     CircularProgressIndicator(color = MaterialTheme.colors.onPrimary)
                 } else {
-                    Text("Login")
+                    Text(
+                        text ="LOGIN",
+                        style = TextStyle(
+                            fontSize = 20.sp,
+                            fontFamily = GothamBlack,
+                            fontWeight = FontWeight.Black,
+                        ),
+                        color = DarkGreenColor
+                    )
                 }
             }
 
             TextButton(
                 onClick = onSignUp,
                 enabled = !isLoading,
-                //color
-
             ) {
-                Text("Don't have an account? Sign up")
+                Text(
+                    text = "Don't have an account? Sign up",
+                    style = TextStyle(
+                        fontSize = 15.sp,
+                        fontFamily = Aeonik,
+                        fontWeight = FontWeight.Normal,
+                    ),
+                    color = DarkGreenColor
+                )
             }
         }
 
