@@ -26,6 +26,7 @@ ui = "1.7.5"
 uiToolingPreview = "1.7.5"
 uiToolingPreviewVersion = "1.6.1"
 uiVersion = "1.6.1"
+firebaseDatabase = "21.0.0"
 
 [libraries]
 androidx-activity-activity-compose-v172-x3 = { module = "androidx.activity:activity-compose", version.ref = "androidxActivityActivityCompose3" }
@@ -66,6 +67,7 @@ material3 = { module = "androidx.compose.material3:material3" }
 ui = { module = "androidx.compose.ui:ui", version.ref = "ui" }
 ui-graphics = { module = "androidx.compose.ui:ui-graphics" }
 ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "uiToolingPreview" }
+firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebaseDatabase" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

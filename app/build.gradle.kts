@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-
     id("com.google.gms.google-services")
 }
 
@@ -85,6 +84,7 @@ dependencies {
     //noinspection GradleDependency
     implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
     implementation("com.google.firebase:firebase-auth")
+    implementation ("com.google.firebase:firebase-database:20.0.6")
 
 
     implementation ("androidx.compose.ui:ui:1.2.0")
