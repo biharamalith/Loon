@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace = "com.nibm.loon"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.nibm.loon"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -71,6 +71,8 @@ dependencies {
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.activity.ktx)
+    implementation(libs.androidx.material3)
 
 // Test dependencies
     testImplementation(libs.junit)
@@ -85,6 +87,7 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
     implementation("com.google.firebase:firebase-auth")
     implementation ("com.google.firebase:firebase-database:20.0.6")
+    implementation("com.google.firebase:firebase-firestore")
 
 
     implementation ("androidx.compose.ui:ui:1.2.0")
