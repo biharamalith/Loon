@@ -15,20 +15,23 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.nibm.loon.ui.theme.DarkGreenColor
+import com.nibm.loon.ui.theme.GreenColor
 
 class HomeScreen : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-                MainScreen()
-            }
+            MainScreen()
         }
     }
-
+}
 
 @Composable
 fun MainScreen() {
@@ -48,13 +51,18 @@ fun BottomNavigationBar(navController: NavHostController) {
         BottomNavItem.Profile
     )
     BottomNavigation(
-        backgroundColor = Color.LightGray // Set the background color to light grey
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
         items.forEach { item ->
             BottomNavigationItem(
-                icon = { Icon(item.icon, contentDescription = item.title, tint = Color.Black) }, // Set the icon color to black
+                icon = {
+                    Icon(
+                        item.icon,
+                        contentDescription = item.title,
+                        tint = Color.Black
+                    )
+                }, // Set the icon color to black
                 label = { Text(item.title) },
                 selected = currentRoute == item.route,
                 onClick = {
@@ -68,13 +76,24 @@ fun BottomNavigationBar(navController: NavHostController) {
     }
 }
 
+
 @Composable
 fun NavigationHost(navController: NavHostController, modifier: Modifier = Modifier) {
     NavHost(navController, startDestination = BottomNavItem.Home.route, modifier = modifier) {
-        composable(BottomNavItem.Home.route) { HomeFragment() }
-        composable(BottomNavItem.Search.route) { SearchFragment() }
-        composable(BottomNavItem.Profile.route) { ProfileFragment() }
+        composable(BottomNavItem.Home.route) { HomeFragment(navController) }
+        composable(BottomNavItem.Search.route) {
+            SearchFragment(keyword = "")
+        }
+        composable(
+            route = "search?keyword={keyword}",
+            arguments = listOf(navArgument("keyword") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val keyword = backStackEntry.arguments?.getString("keyword") ?: ""
+            SearchFragment(keyword = keyword)
+        }
+        composable(BottomNavItem.Profile.route) {ProfileFragment() }
     }
+
 }
 
 sealed class BottomNavItem(val title: String, val icon: ImageVector, val route: String) {

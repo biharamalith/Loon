@@ -1,124 +1,199 @@
 package com.nibm.loon.ui.homeScreen
 
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.MaterialTheme
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.nibm.loon.R
 
-@Preview(showBackground = true)
-@Composable
-fun PreviewHomeFragment() {
-    HomeFragment()
-}
+
 
 @Composable
-fun HomeFragment() {
+fun HomeFragment(navController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(vertical = 16.dp)
+            .verticalScroll(rememberScrollState()), // Enable scrolling
+        verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Logo
-        Image(
-            painter = painterResource(id = R.drawable.logo_text),
-            contentDescription = "Loon Logo",
-            modifier = Modifier
-                .height(64.dp)
-                .padding(bottom = 16.dp),
-            contentScale = ContentScale.Fit
+        val customFont = FontFamily(
+            Font(R.font.londonbridgefontfamily)
         )
 
-        // Header text
         Text(
-            text = "Discover & Book Local Hair Professionals",
-            fontSize = 18.sp,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.padding(bottom = 16.dp)
+            text = "LOON",
+            fontSize = 50.sp,
+            fontWeight = FontWeight.ExtraBold,
+            color = Color(0xff006400),
+            fontFamily = customFont,
+            modifier = Modifier
+                .padding(top = 10.dp, bottom = 10.dp)
         )
 
-        // Search bar
-        var searchQuery by remember { mutableStateOf(TextFieldValue("")) }
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 16.dp)
-                .height(48.dp)
-                .background(Color.LightGray, RoundedCornerShape(8.dp))
+                .background(Color(0x80DAF7DC))
+                .padding(vertical = 16.dp)
         ) {
-            BasicTextField(
-                value = searchQuery,
-                onValueChange = { searchQuery = it },
+            Column(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 16.dp, vertical = 12.dp),
-                singleLine = true,
-            )
-        }
+                    .align(Alignment.Center)
+                    .padding(horizontal = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = "Discover and Book",
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.Normal,
+                    color = Color(0xFF8B6A4D),
+                    fontFamily = customFont,
+                    modifier = Modifier.padding(top = 10.dp, bottom = 5.dp)
+                )
 
-        // "Find pros by service" text
-        Text(
-            text = "Find pros by service",
-            fontSize = 16.sp,
-            textAlign = TextAlign.Start,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 16.dp)
-        )
-
-        // Service grid
-        val services = listOf(
-            "Braids", "Natural Hair", "Haircut", "Men's Haircut",
-            "Locs", "Slick Press", "Weaves", "Eyelashes", "Nails"
-        )
-        val columns = 3
-        val rows = (services.size + columns - 1) / columns
-
-        Column {
-            for (row in 0 until rows) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    for (col in 0 until columns) {
-                        val index = row * columns + col
-                        if (index < services.size) {
-                            Box(
-                                modifier = Modifier
-                                    .weight(1f)
-                                    .aspectRatio(1f)
-                                    .background(Color.LightGray, RoundedCornerShape(8.dp))
-                                    .clickable { },
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Text(text = services[index], textAlign = TextAlign.Center)
-                            }
-                        } else {
-                            Spacer(modifier = Modifier.weight(1f))
-                        }
-                    }
-                }
-                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = "Local Beauty Professionals",
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.Normal,
+                    color = Color(0xFF8B6A4D),
+                    fontFamily = customFont,
+                    modifier = Modifier.padding(top = 5.dp, bottom = 26.dp)
+                )
             }
         }
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(Color(0x80DAF7DC))
+                .padding(vertical = 30.dp)
+        ) {
+            GridLayout(navController)
+        }
+
+        Box(
+            modifier = Modifier
+                .padding(top = 50.dp)
+                .fillMaxWidth()
+                .aspectRatio(2f)
+                .clip(RoundedCornerShape(15.dp))
+                .background(Color.LightGray)
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.loonstyle),
+                contentDescription = "Your Image",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize()
+            )
+        }
+    }
+}
+
+@Composable
+fun GridLayout(navController: NavHostController) {
+    Column(verticalArrangement = Arrangement.spacedBy(27.dp)) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            ServiceBox("Hair Cutting", R.drawable.haircutting, navController, "hairCutting")
+            Spacer(modifier = Modifier.width(22.dp))
+            ServiceBox("Braids", R.drawable.braids, navController, "braids")
+            Spacer(modifier = Modifier.width(22.dp))
+            ServiceBox("Piercing", R.drawable.pircing, navController, "piercing")
+        }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            ServiceBox("Facial Treatment", R.drawable.facialreatment, navController, "facialTreatment")
+            Spacer(modifier = Modifier.width(22.dp))
+            ServiceBox("Eye lashes", R.drawable.eyelashes, navController, "eyelashes")
+            Spacer(modifier = Modifier.width(22.dp))
+            ServiceBox("Massage Therapy", R.drawable.massagetherapy, navController, "massageTherapy")
+        }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            ServiceBox("Nails", R.drawable.nails, navController, "nails")
+            Spacer(modifier = Modifier.width(22.dp))
+            ServiceBox("Locs", R.drawable.locs, navController, "locs")
+            Spacer(modifier = Modifier.width(22.dp))
+            ServiceBox("Slick Press", R.drawable.slickpres, navController, "slickpress")
+        }
+    }
+}
+
+@Composable
+fun ServiceBox(title: String, imageResId: Int, navController: NavHostController, route: String) {
+    var isClicked by remember { mutableStateOf(false) }
+    val backgroundColor by animateColorAsState(
+        targetValue = if (isClicked) Color.Gray else Color.LightGray
+    )
+
+    Box(
+        modifier = Modifier
+            .size(100.dp)
+            .clip(RoundedCornerShape(16.dp))
+            .background(backgroundColor)
+            .clickable {
+                isClicked = !isClicked
+                navController.navigate("search?keyword=$title")
+            },
+        contentAlignment = Alignment.Center
+    ) {
+        Image(
+            painter = painterResource(id = imageResId),
+            contentDescription = "$title Image",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxSize()
+        )
+
+        Text(
+            text = title,
+            color = Color.White,
+            fontSize = 14.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(8.dp)
+        )
+    }
+}
+
+
+@Preview(showBackground = true, name = "Home Fragment Preview")
+@Composable
+fun HomeFragmentPreview() {
+    MaterialTheme {
+        HomeFragment(navController = rememberNavController())
     }
 }
